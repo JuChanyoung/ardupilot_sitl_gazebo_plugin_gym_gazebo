@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <robot name="sensor_kinect" xmlns:xacro="http://ros.org/wiki/xacro">
-  <property name="cam_px" value="1.63" />
-  <xacro:property name="kinect_cam_py" value="-0.0125"/>
-  <property name="cam_pz" value="0.68" />
+  <property name="cam_px" value="0.17" />
+  <xacro:property name="kinect_cam_py" value="0"/>
+  <property name="cam_pz" value="0.05" />
   
   <property name="cam_or" value="0" />
-  <property name="cam_op" value="0" />
+  <property name="cam_op" value="-0.2" />
   <property name="cam_oy" value="0" />  
 
   <xacro:property name="M_PI" value="3.1415926535897931" />
 
   <!-- Parameterised in part by the values in turtlebot_properties.urdf.xacro -->
-  <xacro:macro name="sensor_kinect" params="parent">
+  <xacro:macro name="sensor_kinect" params="parent radius_rotor">
     <joint name="camera_rgb_joint" type="fixed">
       <origin xyz="${cam_px} ${kinect_cam_py} ${cam_pz}" rpy="${cam_or} ${cam_op} ${cam_oy}"/>
       <parent link="${parent}"/>
@@ -39,18 +39,18 @@
          <mesh filename="package://ardupilot_sitl_gazebo_plugin/meshes/meshes_sensors/kinect/kinect.dae"/>
         </geometry>
       </visual>
-  	  <collision>
+  	  <!-- <collision>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
   	    <geometry>
   	      <box size="0.07271 0.27794 0.073"/>
   	    </geometry>
-  	  </collision>
+  	  </collision> -->
       <inertial>
-        <mass value="0.564" />
+        <mass value="0.005" />
         <origin xyz="0 0 0" />
-        <inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
-                 iyy="0.000498940" iyz="0.0"
-                 izz="0.003879257" />
+        <inertia ixx="0.001"  ixy="0.0"  ixz="0.0"
+                 iyy="0.001"  iyz="0.0"
+                 izz="0.001" />
       </inertial>
     </link>
 
@@ -77,16 +77,24 @@
       <always_on>true</always_on>
       <update_rate>20.0</update_rate>
       <camera>
-        <horizontal_fov>${60.0*M_PI/180.0}</horizontal_fov>
+        <horizontal_fov>${90.0*M_PI/180.0}</horizontal_fov>
         <image>
           <format>R8G8B8</format>
           <width>640</width>
           <height>480</height>
         </image>
         <clip>
-          <near>0.05</near>
-          <far>8.0</far>
+          <near>${1.1 * radius_rotor}</near>
+          <far>100.0</far>
         </clip>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise is sampled independently per pixel on each frame.
+               That pixel's noise value is added to each of its color
+               channels, which at that point lie in the range [0,1]. -->
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
       </camera>
       <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
         <cameraName>camera</cameraName>

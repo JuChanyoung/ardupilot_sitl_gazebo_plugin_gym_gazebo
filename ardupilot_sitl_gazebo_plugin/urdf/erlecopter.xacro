@@ -180,7 +180,7 @@
     ray_count_horizontal="140"
     ray_count_vertical="1"
     sensor_mesh="lidar_lite_v2_withRay/meshes/lidar_lite_v2_withRay.dae">
-    <origin xyz="0.13 0.0 0.02" rpy="0 0 0"/>
+    <origin xyz="0.13 0.0 0.05" rpy="0 0 0"/>
   </xacro:lidar_sensor>
 
 
@@ -214,7 +214,22 @@
     hfov="81"
     framename="erlecopter_frontcam">
     <origin xyz="0.17 0.0 0.0" rpy="0 0 0"/>
-  </xacro:generic_camera>  
+  </xacro:generic_camera>
+
+  <!-- Kinect camera -->
+  <xacro:include filename="$(find ardupilot_sitl_gazebo_plugin)/urdf/sensors/kinect.urdf.xacro" />
+  <xacro:sensor_kinect parent="base_link" radius_rotor="${radius_rotor}" />
+
+  <!-- Contact sensor -->
+<!--   <xacro:include filename="$(find ardupilot_sitl_gazebo_plugin)/urdf/sensors/contact.urdf.xacro" />
+  <xacro:sensor_contact
+    name="erlecopter/contact"
+    parent="base_link"
+    body_length="${body_length}"
+    body_width="${body_width}"
+    body_height="${body_height}">
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </xacro:sensor_contact> -->
 
   <!-- Instantiate rotors -->
   <xacro:vertical_rotor
@@ -234,7 +249,7 @@
     rolling_moment_coefficient="${rolling_moment_coefficient}"
     mesh="erlecopter_prop"
     mesh_scale="${mesh_scale_prop}"
-    color="Yellow">
+    color="Red">
     <origin xyz="${arm_length_front_x} -${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>
@@ -277,7 +292,7 @@
     rolling_moment_coefficient="${rolling_moment_coefficient}"
     mesh="erlecopter_prop"
     mesh_scale="${mesh_scale_prop}"
-    color="Yellow">
+    color="Red">
     <origin xyz="${arm_length_front_x} ${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>

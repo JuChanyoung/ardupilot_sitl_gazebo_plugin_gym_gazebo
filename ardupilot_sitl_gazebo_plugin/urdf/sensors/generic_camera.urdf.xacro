@@ -17,7 +17,7 @@ xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
       
       <link name="${name}_link">
         <inertial>
-          <mass value="0.001" />
+          <mass value="0.0005" />
           <origin xyz="0 0 0" rpy="0 0 0" />
           <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
         </inertial>
@@ -48,7 +48,7 @@ xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
     
     <link name="ardrone_base_${name}cam">
       <inertial>
-        <mass value="0.01" />
+        <mass value="0.005" />
         <origin xyz="0 0 0" />
         <inertia ixx="0.001"  ixy="0.0"  ixz="0.0"
                  iyy="0.001"  iyz="0.0"
