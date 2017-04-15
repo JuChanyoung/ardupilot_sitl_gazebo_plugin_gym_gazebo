@@ -175,7 +175,7 @@
     update_rate="10"
     min_range="0.01"
     max_range="10.0"
-    field_of_view_horizontal="${70*M_PI/180}"
+    field_of_view_horizontal="${90*M_PI/180}"
     field_of_view_vertical="${1*M_PI/180}"
     ray_count_horizontal="140"
     ray_count_vertical="1"
